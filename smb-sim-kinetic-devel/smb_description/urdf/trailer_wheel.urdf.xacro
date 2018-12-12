@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="trailer_wheel">
+	 <xacro:property name="M_PI" value="3.14159"/>
+    <!-- Wheel Properties -->
+      <xacro:property name="cart_wheel_length" value="0.200" />
+      <xacro:property name="cart_wheel_radius" value="0.231" />
+      <xacro:property name="cart_wheel_mass" value="40.0" />
+
+	<xacro:macro name="cart_wheel_inertia" params="m r h">
+	<inertia ixx="${m*(3*r*r+h*h)/12}" ixy="0" ixz="0"
+		iyy="${m*r*r/2}" iyz="0"
+		izz="${m*(3*r*r+h*h)/12}" />
+	</xacro:macro>
+
+	<xacro:macro name="trailer_wheel" params="wheel_prefix cart_num *joint_pose ">
+        <link name="${wheel_prefix}_wheel_link">
+          <inertial>
+            <mass value="${cart_wheel_mass}"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <xacro:cart_wheel_inertia m="${cart_wheel_mass}" r="${cart_wheel_radius}" h="${cart_wheel_length}" />
+          </inertial>
+          <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+              <mesh filename="package://smb_description/meshes/trailer_wheel.dae" />
+            </geometry>
+          </visual>
+          <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+              <mesh filename="package://smb_description/meshes/trailer_wheel.dae" />
+            </geometry>
+          </collision>
+        </link>
+
+        <joint name="${wheel_prefix}_wheel" type="continuous">
+          <parent link="cart_${cart_num}_base_link"/>
+          <child link="${wheel_prefix}_wheel_link"/>
+          <xacro:insert_block name="joint_pose"/>
+          <axis xyz="0 1 0" rpy="0 0 0" />
+        </joint>
+      </xacro:macro>
+</robot>
+

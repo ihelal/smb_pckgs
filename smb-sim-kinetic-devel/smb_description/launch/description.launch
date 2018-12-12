@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="robot_namespace" default="/"/>
+  <arg name="laser_enabled" default="$(optenv SMB_LMS1XX_ENABLED false)"/>
+  <arg name="3d_laser_enable" default="$(optenv SMB_3D_LASER_ENABLE false)"/>
+  <arg name="kinect_enabled" default="$(optenv SMB_KINECT_ENABLED false)"/>
+  <arg name="gps_enabled" default="$(optenv SMB_GPS_ENABLED false)"/>
+  <arg name="urdf_extras" default="$(optenv SMB_URDF_EXTRAS)"/>
+
+  <param name="robot_description" command="$(find xacro)/xacro '$(find smb_description)/urdf/smb.urdf.xacro'
+    --inorder
+    robot_namespace:=$(arg robot_namespace)
+    laser_enabled:=$(arg laser_enabled)
+    3d_laser_enable:=$(arg 3d_laser_enable)
+    kinect_enabled:=$(arg kinect_enabled)
+    gps_enabled:=$(arg gps_enabled)
+    urdf_extras:=$(arg urdf_extras)
+    " />
+
+</launch>
