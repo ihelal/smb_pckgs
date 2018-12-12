@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="cart_macro">
+
+
+<xacro:include filename="$(find cart_description)/urdf/trailer_wheel.urdf.xacro" />
+      <xacro:property name="cart_number" value="1"/>
+      <xacro:property name="M_PI" value="3.14159"/>
+      <xacro:property name="cart_x_size" value="2.60" />
+      <xacro:property name="cart_y_size" value="1.30" />
+      <xacro:property name="cart_z_size" value="0.590" />
+      <xacro:property name="cart_mass" value="1000" />
+
+      <xacro:property name="cart_x_offset" value="0" />
+      <xacro:property name="cart_y_offset" value="0.0" />
+      <xacro:property name="cart_z_offset" value="-0.32" />
+
+      <!-- Wheel Mounting Positions -->
+      <xacro:property name="cart_wheelbase" value="-1.65" />
+      <xacro:property name="cart_track" value="0.605" />
+      <xacro:property name="cart_wheel_vertical_offset" value="-0.065" />
+        <!-- Wheel Properties -->
+      <xacro:property name="cart_wheel_length" value="0.200" />
+      <xacro:property name="cart_wheel_radius" value="0.231" />
+      <xacro:property name="cart_wheel_mass" value="40.0" />
+
+
+      <xacro:macro name="box_inertia" params="m x y z">
+        <inertia ixx="${m*(y*y+z*z)/12}" ixy="0" ixz="0"
+                iyy="${m*(x*x+z*z)/12}" iyz="0"
+                izz="${m*(x*x+z*z)/12}" />
+      </xacro:macro>
+
+
+
+          <link name="cart_${cart_number}_base_link">
+              <visual>
+                <origin xyz="${cart_x_offset} 0 ${cart_z_offset}" rpy="0 0 ${-M_PI/2}" />
+                <geometry>
+                  <mesh filename="package://cart_description/meshes/new_meshes/trailer_body1.dae" />
+                </geometry>
+              </visual>
+              <collision>
+                <origin xyz="${cart_x_offset} 0 ${cart_z_offset}" rpy="0 0 ${-M_PI/2}" />
+                <geometry>
+                  <mesh filename="package://cart_description/meshes/new_meshes/trailer_body1.dae" />
+                </geometry>
+              </collision>
+              <inertial>
+                <origin xyz="-2.6 0 0" rpy="0 0 0"/>
+                <mass value="${cart_mass}"/>
+                <xacro:box_inertia m="${cart_mass}" x="${cart_x_size}"
+                                   y="${cart_y_size}" z="${cart_z_size}" />
+              </inertial>
+            </link>
+
+          <xacro:trailer_wheel wheel_prefix="cart_${cart_number}_front_left" cart_num="${cart_number}">
+            <origin xyz="${cart_wheelbase+cart_x_offset} ${cart_track} ${cart_wheel_vertical_offset-0.00}" rpy="0 0 0" />
+          </xacro:trailer_wheel>
+          <xacro:trailer_wheel wheel_prefix="cart_${cart_number}_front_right" cart_num="${cart_number}">
+            <origin xyz="${cart_wheelbase+cart_x_offset} ${-cart_track} ${cart_wheel_vertical_offset-0.00}" rpy="0 0 0" />
+          </xacro:trailer_wheel>
+
+          <xacro:trailer_wheel wheel_prefix="cart_${cart_number}_rear_left" cart_num="${cart_number}">
+            <origin xyz="${cart_wheelbase*1.8+cart_x_offset} ${cart_track} ${cart_wheel_vertical_offset-0.004}" rpy="0 0 0" />
+          </xacro:trailer_wheel>
+          <xacro:trailer_wheel wheel_prefix="cart_${cart_number}_rear_right" cart_num="${cart_number}">
+            <origin xyz="${cart_wheelbase*1.8+cart_x_offset} ${-cart_track} ${cart_wheel_vertical_offset-0.004}" rpy="0 0 0" />
+          </xacro:trailer_wheel>          
+
+
+    </robot>
