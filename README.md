@@ -16,3 +16,5 @@ $ rosdep install --from-paths src --ignore-src -r -y
 $ sudo apt-get install ros-kinetic-velodyne-simulator
 $ sudo apt-get install ros-kinetic-ar-track-alvar
 $ catkin_make
+
+ss
