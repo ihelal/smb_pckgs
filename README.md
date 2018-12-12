@@ -11,8 +11,8 @@ Assuming the full version of ROS Kinetic and all the Gazebo packages and plugins
 5. $ catkin_make
 6. $ cd src
 7. $ git clone https://github.com/ihelal/smb_pckgs.git
-$ cd ..
-$ rosdep install --from-paths src --ignore-src -r -y
-$ sudo apt-get install ros-kinetic-velodyne-simulator
-$ sudo apt-get install ros-kinetic-ar-track-alvar
-$ catkin_make
+8. $ cd ..
+9. $ rosdep install --from-paths src --ignore-src -r -y
+10.$ sudo apt-get install ros-kinetic-velodyne-simulator
+11.$ sudo apt-get install ros-kinetic-ar-track-alvar
+12.$ catkin_make
