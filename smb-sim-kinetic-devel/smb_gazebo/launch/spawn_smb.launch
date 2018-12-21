@@ -8,10 +8,11 @@
 
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
-  <arg name="z" default="0.0"/>
-  <arg name="yaw" default="0.0"/>
+  <arg name="z" default="0.7"/>
+  <arg name="yaw" default="0"/>
 
   <arg name="laser_enabled" default="$(optenv SMB_LMS1XX_ENABLED false)"/>
+  <arg name="laser2_enabled" default="$(optenv SMB_LMS1XX_ENABLED2 false)"/>
   <arg name="3d_laser_enable" default="$(optenv SMB_3D_LASER_ENABLE false)"/>
   <arg name="kinect_enabled" default="$(optenv SMB_UR5_ENABLED false)"/>
   <arg name="urdf_extras" default="$(optenv SMB_URDF_EXTRAS)"/>
@@ -23,6 +24,7 @@
       <include file="$(find smb_description)/launch/description.launch" >
         <arg name="robot_namespace" value="$(arg robot_namespace)"/>
         <arg name="laser_enabled" default="$(arg laser_enabled)"/>
+        <arg name="laser2_enabled" default="$(arg laser2_enabled)"/>
         <arg name="gps_enabled" default="$(arg gps_enabled)"/>
         <arg name="3d_laser_enable" default="$(arg 3d_laser_enable)"/>
         <arg name="kinect_enabled" default="$(arg kinect_enabled)"/>
@@ -44,6 +46,7 @@
       <include file="$(find smb_control)/launch/control.launch">
         <arg name="multimaster" value="$(arg multimaster)"/>
         <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+        <arg name="laser2_enabled" default="$(arg laser2_enabled)"/>
         <arg name="gps_enabled" value="$(arg gps_enabled)"/>
         <arg name="3d_laser_enable" default="$(arg 3d_laser_enable)"/>
         <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>

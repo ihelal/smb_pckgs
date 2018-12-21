@@ -3,17 +3,17 @@
 <launch>
 
   <arg name="world_name" default="worlds/empty.world"/>
-  
 
   <arg name="laser_enabled" default="true"/>
+  <arg name="laser2_enabled" default="true"/>
   <arg name="3d_laser_enable" default="true"/>
   <arg name="kinect_enabled" default="true"/>
   <arg name="gps_enabled" default="true"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     
-    <arg name="world_name" value="$(arg world_name)"/>  <!--world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
-    <!--<arg name="world_name" value="$(find smb_gazebo)/worlds/outdoor_environment.world"/>-->
+  <!-- <arg name="world_name" value="$(arg world_name)"/>  world_name is wrt GAZEBO_RESOURCE_PATH environment variable -->
+    <arg name="world_name" value="$(find smb_gazebo)/worlds/smb_env.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -23,17 +23,30 @@
 
   <include file="$(find smb_gazebo)/launch/spawn_smb.launch">
     <arg name="laser_enabled" value="$(arg laser_enabled)"/>
+    <arg name="laser2_enabled" value="$(arg laser2_enabled)"/>
     <arg name="3d_laser_enable" value="$(arg 3d_laser_enable)"/>
     <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
     <arg name="gps_enabled" value="$(arg gps_enabled)"/>
   </include>
 
+  <arg name="xc" default="0.0"/>
+  <arg name="yc" default="0.0"/>
+  <arg name="zc" default="0.7"/>
+  <arg name="yawc" default="0"/>
 
 
    <!--<param name="cart_description" command="$(find xacro)/xacro.py '$(find cart_description)/urdf/cart.urdf.xacro'"/>
 
-  <node name="cart_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
-   args="-urdf -param cart_description -model cart" />-->
+  <node name="cart_spawn" pkg="gazebo_ros" type="spawn_model" 
+     args="-x $(arg xc)
+           -y $(arg yc)
+           -z $(arg zc)
+           -Y $(arg yawc)
+           -urdf
+           -param cart_description 
+           -model cart" />-->
 
   <include file="$(find ar_tag)/launch/ar_track_alvar.launch"/>
+  <include file="$(find pot_detection)/launch/laser_filter.launch"/>
+  <include file="$(find pot_detection)/launch/laser_filter2.launch"/>
 </launch>
