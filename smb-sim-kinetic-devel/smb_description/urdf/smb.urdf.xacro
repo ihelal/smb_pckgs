@@ -35,14 +35,18 @@
 
   <xacro:arg name="3d_laser_enable" default="false" />
   <xacro:arg name="laser_enabled" default="false" />
+  <xacro:arg name="laser2_enabled" default="false" />
   <xacro:arg name="gps_enabled" default="false" />
   <xacro:arg name="gpu" default="false"/>
   <xacro:arg name="laser_xyz" default="$(optenv SMB_LMS1XX_XYZ ${base_x_size/2*1.1} 0.0 ${-base_z_size/2})" />
   <xacro:arg name="laser_rpy" default="$(optenv SMB_LMS1XX_RPY 0.0 0.0 0.0)" />
 
+  <xacro:arg name="laser2_xyz" default="$(optenv SMB_LMS1XX_XYZ ${-base_x_size/2*1.1} 0.0 ${-base_z_size/2})" />
+  <xacro:arg name="laser2_rpy" default="$(optenv SMB_LMS1XX_RPY 0.0 0.0 ${M_PI})" />
+
   <xacro:arg name="kinect_enabled" default="false" />
   <xacro:arg name="kinect_xyz" default="$(optenv SMB_KINECT_XYZ 0 0 0)" />
-  <xacro:arg name="kinect_rpy" default="$(optenv SMB_KINECT_RPY 0 0.2 3.14)" />
+  <xacro:arg name="kinect_rpy" default="$(optenv SMB_KINECT_RPY 0 0.1 3.14)" />
 
 
   <xacro:arg name="robot_namespace" default="/" />
@@ -164,6 +168,44 @@
 
   </xacro:if>
 
+    <!--2nd 2D Lidar -->
+  <xacro:if value="$(arg laser2_enabled)">
+
+  <xacro:include filename="$(find lms1xx)/urdf/sick_lms1xx.urdf.xacro" />
+
+     <link name="base2_laser_mount">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 ${-M_PI/2}" />
+        <geometry>
+          <!-- Origin of this mesh is the base of the bracket. -->
+          <mesh filename="package://smb_description/meshes/accessories/lms1xx_mount.dae" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 .0585" rpy="0 0 0" />
+        <geometry>
+          <box size=".1 .108 .117" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="base2_laser_joint" type="fixed">
+      <!-- This offset is from the base of the bracket to the LIDAR's focal point. -->
+      <origin xyz="0.0352 0 0.0566" rpy="${M_PI} 0 0" />
+      <parent link="base2_laser_mount" />
+      <child link="base2_laser" />
+    </joint>
+
+    <sick_lms1xx frame="base2_laser" topic="scan2" robot_namespace="$(arg robot_namespace)"/>
+
+    <joint name="laser2_mount_joint" type="fixed">
+      <origin xyz="$(arg laser2_xyz)" rpy="$(arg laser2_rpy)" />
+      <parent link="base_link" />
+      <child link="base2_laser_mount" />
+    </joint>
+
+  </xacro:if>
+
   <!--Kinect -->
   <xacro:if value="$(arg kinect_enabled)">
 
@@ -209,11 +251,11 @@
       <updateRate>50.0</updateRate>
       <bodyName>base_link</bodyName>
       <topicName>imu/data</topicName>
-      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelDrift>0.001 0.001 0.001</accelDrift>
       <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
-      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateDrift>0.001 0.001 0.001 </rateDrift>
       <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
-      <headingDrift>0.005</headingDrift>
+      <headingDrift>0.001</headingDrift>
       <headingGaussianNoise>0.005</headingGaussianNoise>
     </plugin>
   </gazebo>
@@ -221,13 +263,13 @@
   <gazebo>
     <plugin name="gps_controller" filename="libhector_gazebo_ros_gps.so">
       <robotNamespace>$(arg robot_namespace)</robotNamespace>
-      <updateRate>40</updateRate>
+      <updateRate>50</updateRate>
       <bodyName>base_link</bodyName>
       <frameId>base_link</frameId>
       <topicName>navsat/fix</topicName>
       <velocityTopicName>navsat/vel</velocityTopicName>
-      <referenceLatitude>49.9</referenceLatitude>
-      <referenceLongitude>8.9</referenceLongitude>
+      <referenceLatitude>49.097745</referenceLatitude>
+      <referenceLongitude>-122.260090</referenceLongitude>
       <referenceHeading>0</referenceHeading>
       <referenceAltitude>0</referenceAltitude>
       <drift>0.0001 0.0001 0.0001</drift>

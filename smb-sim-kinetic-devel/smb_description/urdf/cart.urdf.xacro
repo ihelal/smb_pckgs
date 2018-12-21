@@ -12,7 +12,7 @@
       <xacro:property name="cart_x_size" value="2.60" />
       <xacro:property name="cart_y_size" value="1.30" />
       <xacro:property name="cart_z_size" value="0.590" />
-      <xacro:property name="cart_mass" value="530.0" />
+      <xacro:property name="cart_mass" value="1530.0" />
 
       <xacro:property name="cart_x_offset" value="0" />
       <xacro:property name="cart_y_offset" value="0.0" />
@@ -90,7 +90,7 @@
           </joint>
 
 
-          <joint name="cart_${cart_number}_joint" type="continuous">
+          <joint name="cart_${cart_number}_joint" type="fixed">
               <origin xyz="0 0 0" rpy="0 0 0" />
               <parent link="${base_frame}" />
               <child link="cart_${cart_number}_puller_link" />

@@ -3,6 +3,7 @@
 
   <arg name="robot_namespace" default="/"/>
   <arg name="laser_enabled" default="$(optenv SMB_LMS1XX_ENABLED false)"/>
+  <arg name="laser2_enabled" default="$(optenv SMB_LMS1XX_ENABLED2 false)"/>
   <arg name="3d_laser_enable" default="$(optenv SMB_3D_LASER_ENABLE false)"/>
   <arg name="kinect_enabled" default="$(optenv SMB_KINECT_ENABLED false)"/>
   <arg name="gps_enabled" default="$(optenv SMB_GPS_ENABLED false)"/>
@@ -12,6 +13,7 @@
     --inorder
     robot_namespace:=$(arg robot_namespace)
     laser_enabled:=$(arg laser_enabled)
+    laser2_enabled:=$(arg laser2_enabled)
     3d_laser_enable:=$(arg 3d_laser_enable)
     kinect_enabled:=$(arg kinect_enabled)
     gps_enabled:=$(arg gps_enabled)
