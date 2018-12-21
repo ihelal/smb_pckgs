@@ -9,6 +9,7 @@
        default="$(eval optenv('SMB_CONFIG_EXTRAS', find('smb_control') + '/config/empty.yaml'))"/>
 
   <arg name="laser_enabled" default="$(optenv SMB_LMS1XX_ENABLED false)"/>
+  <arg name="laser2_enabled" default="$(optenv SMB_LMS1XX_ENABLED2 false)"/>
   <arg name="3d_laser_enable" default="$(optenv SMB_3D_LASER_ENABLE false)"/>
   <arg name="kinect_enabled" default="$(optenv SMB_KINECT_ENABLED false)"/>
   <arg name="gps_enabled" default="$(optenv SMB_GPS_ENABLED false)"/>
@@ -24,6 +25,7 @@
   <!-- Load robot description -->
   <include file="$(find smb_description)/launch/description.launch" >
     <arg name="laser_enabled" default="$(arg laser_enabled)"/>
+    <arg name="laser2_enabled" default="$(arg laser2_enabled)"/>
     <arg name="3d_laser_enable" default="$(arg 3d_laser_enable)"/>
     <arg name="kinect_enabled" default="$(arg kinect_enabled)"/>
     <arg name="gps_enabled" default="$(arg gps_enabled)"/>
