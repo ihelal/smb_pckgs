@@ -1,5 +1,5 @@
 # smb_pckgs
-This repository is for the latest SMB Simulation progress V1.2.1
+This repository is for the latest SMB Simulation progress V1.3
 
 Assuming the full version of ROS Kinetic and all the Gazebo packages and plugins are installed along with Rviz plugins.
 
