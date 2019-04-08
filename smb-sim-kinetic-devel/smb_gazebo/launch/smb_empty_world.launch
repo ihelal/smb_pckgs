@@ -35,7 +35,7 @@
   <arg name="yawc" default="0"/>
 
 
-   <!--<param name="cart_description" command="$(find xacro)/xacro.py '$(find cart_description)/urdf/cart.urdf.xacro'"/>
+   <param name="cart_description" command="$(find xacro)/xacro.py '$(find cart_description)/urdf/cart.urdf.xacro'"/>
 
   <node name="cart_spawn" pkg="gazebo_ros" type="spawn_model" 
      args="-x $(arg xc)
@@ -44,9 +44,9 @@
            -Y $(arg yawc)
            -urdf
            -param cart_description 
-           -model cart" />-->
+           -model cart" />
 
-  <include file="$(find ar_tag)/launch/ar_track_alvar.launch"/>
+  <!--<include file="$(find ar_tag)/launch/ar_track_alvar.launch"/>
   <include file="$(find pot_detection)/launch/laser_filter.launch"/>
-  <include file="$(find pot_detection)/launch/laser_filter2.launch"/>
+  <include file="$(find pot_detection)/launch/laser_filter2.launch"/>-->
 </launch>
