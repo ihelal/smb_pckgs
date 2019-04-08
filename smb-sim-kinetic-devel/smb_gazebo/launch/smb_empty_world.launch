@@ -46,7 +46,7 @@
            -param cart_description 
            -model cart" />
 
-  <!--<include file="$(find ar_tag)/launch/ar_track_alvar.launch"/>
-  <include file="$(find pot_detection)/launch/laser_filter.launch"/>
+  <include file="$(find ar_tag)/launch/ar_track_alvar.launch"/>
+  <!--<include file="$(find pot_detection)/launch/laser_filter.launch"/>
   <include file="$(find pot_detection)/launch/laser_filter2.launch"/>-->
 </launch>
